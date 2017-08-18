@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-//import { HttpClient } from '@angular/common/http'
+import { HttpHeaderResponse } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 
@@ -30,17 +30,22 @@ export class ListComponent implements OnInit {
     this.apiService.getViews()
     .subscribe(
       response => 
-        this.views = response, 
-      (error) => this.loginError(error))  
+        {this.views = response,
+        console.log(response)}, 
+      (error: HttpHeaderResponse) => {
+        console.log(error)
+        this.loginError(error)})  
   }
 
-  loginError(error){
+  loginError(error: HttpHeaderResponse){
     console.log('Error')
-    console.log(error)
+    console.log(error.status)
     //console.log(error.name)
     //console.log(error.stack)
-    if( error === 401){
-    this.router.navigate(['/login'])}
+    if( error.status === 401){
+    console.log('je bila napaka : 401')
+    }
+  else { console.log('ni bilo 401')}
   }
 
   clickOnView(view: View){
