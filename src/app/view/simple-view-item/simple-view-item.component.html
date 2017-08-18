@@ -1,0 +1,7 @@
+
+
+<li *ngFor="let graph of graphData">
+ <ul> Graph name:{{graph.name}}
+ parameter: {{graph.partab}}</ul>
+ Vrednosti: <app-simple-chart [graph]="graph"></app-simple-chart>
+</li>

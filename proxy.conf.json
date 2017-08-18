@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "http://kolomonko.arso.sigov.si:8000",
+    "secure": false
+  } 
+}

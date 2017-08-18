@@ -1,0 +1,8 @@
+<p>
+  view-grid works!
+</p>
+<li *ngFor="let item of simpleViewItem" class="grid"
+(click)="goToItem(item)">
+  {{item.id}}
+  <app-simple-view-item [simpleItem]="item"></app-simple-view-item>
+</li>

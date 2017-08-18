@@ -1,0 +1,19 @@
+<h3>Chart Item </h3>
+
+<input type="radio" name="dateFrom" value=12 (click)="changeDate(12)" >12h <br>
+<input type="radio" name="dateFrom" value=24 (click)="changeDate(24)" checked="true" >24h <br>
+<input type="radio" name="dateFrom" value=36 (click)="changeDate(36)">36h <br>
+
+<li *ngFor="let graph of graphSets">
+
+  <input type="checkbox" [checked]="graph.checked" (change)="graphChecked(graph)"> {{graph.checked}}
+  {{graph.partab}}
+</li>
+
+<li *ngFor="let graph of graphSets">
+  <div *ngIf="graph.checked">
+    
+  <b>{{graph.partab}}</b>
+  <app-chart-data [chart]="graph" [dateFrom]="dateFrom"></app-chart-data>
+</div>
+</li>

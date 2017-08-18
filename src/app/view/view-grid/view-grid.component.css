@@ -1,0 +1,9 @@
+.grid {
+    float: left;
+    width: 90%;
+    border: 1px solid black;
+}
+
+.grid:hover {
+    border:4px solid turquoise;
+}

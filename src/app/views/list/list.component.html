@@ -1,0 +1,9 @@
+<p>
+  List:
+</p>
+<li *ngFor="let view of views"
+(click)="clickOnView(view)"
+[routerLink]="['views',viewId]" >
+{{view.name}}
+</li>
+
