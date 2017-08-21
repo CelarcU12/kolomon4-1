@@ -13,7 +13,7 @@ import { Graph } from './graph';
 
 @Injectable()
 export class ApiService {
-  url='/api/v1'
+  url='http://kolomonko.arso.sigov.si:8000/api/v1'
 
   views: View[];
 
@@ -67,9 +67,10 @@ export class ApiService {
         return this.http.post(
           this.url+'/login/',
           "username="+username+"&"+"password="+password,
-          {   headers: new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded')
-        }
-              )
+          {   headers: new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded'),
+          withCredentials: true
+          
+        })
             
     }
     
