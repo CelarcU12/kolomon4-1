@@ -1,7 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, 
+  HttpXsrfTokenExtractor, 
+  HttpClientXsrfModule
+} from '@angular/common/http';
+
 
 import { RoutingModule } from './routing.module';
 
@@ -37,10 +41,26 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RoutingModule
+    RoutingModule,
+    HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'arso_cookie',
+      headerName: 'My-Xsrf-Header',
+    })
+
     // DataListModule
   ],
-  providers: [ApiService],
+  providers:[ { provide: HttpXsrfTokenExtractor, useFactory: getTokenFactory  },
+    ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+export function getTokenFactory(){
+ // new DOMSettableTokenList()
+  
+   
+}
+//}"\".eJxVjUEOwiAURO_C2hD8BaRduvcM5MNHQQ000CYa493FpAvdzrw382IW1yXatYVqHfpbyMQmRlfMl8J9yUtNjn8RvrWNnwqF-3Fjd78DEVvsNhogVGj8IMQopBSSzibAIEGPCgjgoFA5rf7l1I8Hve9ZC62lkm14zKk-2STeHwTiN9c:1dk8Oq:ieSZDs8oE9Me85OGMcisC_PN89k\""	

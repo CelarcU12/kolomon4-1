@@ -30,20 +30,25 @@ export class ListComponent implements OnInit {
     this.apiService.getViews()
     .subscribe(
       response => 
-        {this.views = response,
-        console.log(response)}, 
+      {this.views = response,
+          console.log('Response views')
+          console.log(this.views)
+        }, 
       (error: HttpHeaderResponse) => {
+        console.log('Subcribe login')
         console.log(error)
         this.loginError(error)})  
-  }
+      }
+
 
   loginError(error: HttpHeaderResponse){
     console.log('Error')
-    console.log(error.status)
+    console.log(error)
     //console.log(error.name)
     //console.log(error.stack)
     if( error.status === 401){
     console.log('je bila napaka : 401')
+    //this.router.navigate(['/login'])
     }
   else { console.log('ni bilo 401')}
   }

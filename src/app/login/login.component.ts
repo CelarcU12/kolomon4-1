@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, 
+    HttpXsrfTokenExtractor
+     } from '@angular/common/http';
 import { ApiService } from '../api.service';
 
 
@@ -15,16 +17,18 @@ export class LoginComponent implements OnInit {
     model: any = {};
     loading = false;
     url='/views'
+    logged: boolean;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private apiService: ApiService
+        private apiService: ApiService,
+        private token: HttpXsrfTokenExtractor
     ){ }
 
     ngOnInit() {
         // reset login status
-        this.apiService.logout();
+        //this.apiService.logout();
 
     }
 
@@ -32,13 +36,26 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         //console.log(this.model.username, this.model.password)
         this.apiService.login(this.model.username, this.model.password)
-            .subscribe(
-                data => {
-                    
-                    console.log(data)
-                    console.log('Message error, nepravilen vnos');
-                    this.router.navigate([this.url]);
-                },
-                (error: HttpErrorResponse) => console.log('tretji konzol log'));
+            // .subscribe((data) =>
+            //     {
+            //         console.log(data)
+            //     },
+            //     (error: HttpErrorResponse) => {
+            //         if (error.status === 200){
+            //             console.log('Prijava je bila uspešna')
+            //             console.log()
+            //             this.logged=true
+                        
+
+            //         }
+            //         else {
+            //             console.log("Neuspešna prijava, Napaka:"+error.status)
+            //             this.router.navigate(['/login'])
+            //             this.loading= false;
+            //             this.logged=false;
+            //             console.log(error.headers.get('token'))
+                        
+            //         }
+            //     });
     }
 }

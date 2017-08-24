@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpRequest, HttpParams } from '@angular/common/http';
+
+
+import { 
+  HttpClient, 
+  HttpHeaders, 
+  HttpRequest, 
+  HttpParams,
+  HttpErrorResponse,
+  HttpXsrfTokenExtractor} from '@angular/common/http';
+
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -9,32 +18,28 @@ import { GraphSet } from './graph-set';
 import { PositionSet } from './position-set';
 import { Graph } from './graph';
 
+
 //const headers= new Headers({'Content-Type': 'application/json'});
 
 @Injectable()
 export class ApiService {
   url='http://kolomonko.arso.sigov.si:8000/api/v1'
-
+  logged:boolean;
   views: View[];
 
   constructor(
     private http: HttpClient,
+    private httpXsrf: HttpXsrfTokenExtractor
     ) { }
 
-  // headers = new HttpHeaders({
-  // 'Content-Type': 'application/json'
-  // });
+
 
   getViews(): Observable<any>{
     //get views from url
+    console.log('get views()')
     return this.http.get(this.url+'/views');
-  //   .catch(this.getError)
-  //   };
-    
-  // getError(error : Response){
-  //   console.error(error.status);
-  //   return Observable.throw(error || "Get error")
- }
+ 
+  }
     
   
   getView(id: string): Observable<View>{
@@ -63,13 +68,32 @@ export class ApiService {
   login(username: string, password: string){
       console.log('login metod') 
       console.log(JSON.stringify({ username: username, password: password }))
-      
         return this.http.post(
           this.url+'/login/',
           "username="+username+"&"+"password="+password,
-          {   headers: new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded'),
-          withCredentials: true
-          
+          {   headers: new HttpHeaders()
+            .set('Content-Type','application/x-www-form-urlencoded')
+            //withCredentials: true
+            //.set('withCredentials', 'true')
+        })
+        .subscribe((data) =>
+        {
+            console.log(data)
+        },
+        (error: HttpErrorResponse) => {
+            if (error.status === 200){
+                console.log('Prijava je bila uspešna')
+                console.log()
+                this.logged=true
+                
+
+            }
+            else {
+                console.log("Neuspešna prijava, Napaka:"+error.status)
+                this.logged=false;
+                console.log(error.headers.get('token'))
+                
+            }
         })
             
     }
