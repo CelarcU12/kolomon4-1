@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this.loading = true;
+        this.loading = false;
         //console.log(this.model.username, this.model.password)
         this.apiService.login(this.model.username, this.model.password)
             // .subscribe((data) =>

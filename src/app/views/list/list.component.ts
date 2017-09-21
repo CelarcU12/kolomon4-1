@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpHeaderResponse } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
@@ -10,6 +10,9 @@ import { ApiService } from '../../api.service';
 //class
 import { View } from '../../view';
 
+//chart test
+import { D3Service, D3, Selection } from 'd3-ng2-service';
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -18,14 +21,23 @@ import { View } from '../../view';
 export class ListComponent implements OnInit {
   views:View[];
   error: string;
+  cols: any[];
+  cars: any[];
+
+  private d3: D3; // <-- Define the private member which will hold the d3 reference
+  private parentNativeElement: any;
 
   constructor(
     private apiService: ApiService,
     private router: Router,
+    element: ElementRef,
+    d3Service: D3Service
    // private httpClient: HttpClient
-  ) { }
+  ) {}
 
   ngOnInit() {
+    
+    
 
     this.apiService.getViews()
     .subscribe(
@@ -38,6 +50,8 @@ export class ListComponent implements OnInit {
         console.log('Subcribe login')
         console.log(error)
         this.loginError(error)})  
+      
+      
       }
 
 
